@@ -33,32 +33,33 @@ part 2:
 import unittest
 import sys
 
-import testing_core
+import hb_lib.testing
 
 import aoc_2018.day_01
 
 PART_01_CASES = [
-    testing_core.CaseParameters('+1, -2, +3, +1', 3),
-    testing_core.CaseParameters('+1, +1, +1', 3),
-    testing_core.CaseParameters('+1, +1, -2', 0),
-    testing_core.CaseParameters('-1, -2, -3', 6)
+    hb_lib.testing.CaseParameters('+1, -2, +3, +1', 3),
+    hb_lib.testing.CaseParameters('+1, +1, +1', 3),
+    hb_lib.testing.CaseParameters('+1, +1, -2', 0),
+    hb_lib.testing.CaseParameters('-1, -2, -3', 6)
 ]
 
 PART_02_CASES = [
-    testing_core.CaseParameters('+1, -1', 0),
-    testing_core.CaseParameters('+3, +3, +4, -2, -4', 10),
-    testing_core.CaseParameters('-6, +3, +8, +5, -6', 5),
-    testing_core.CaseParameters('+7, +7, -2, -7, -4', 14)
+    hb_lib.testing.CaseParameters('+1, -1', 0),
+    hb_lib.testing.CaseParameters('+3, +3, +4, -2, -4', 10),
+    hb_lib.testing.CaseParameters('-6, +3, +8, +5, -6', 5),
+    hb_lib.testing.CaseParameters('+7, +7, -2, -7, -4', 14)
 ]
 
 
 def load_tests(loader, tests, pattern):
-
+    print('loading tests')
     suite = unittest.TestSuite()
 
     class TestCase(unittest.TestCase):
 
         def __init__(self, case_params, part):
+            print('inited {}: {}'.format(part, case_params))
             self._case_params = case_params
             self._part = part
 
@@ -73,6 +74,7 @@ def load_tests(loader, tests, pattern):
                 run_function = aoc_2018.day_01.part_02
             else:
                 self.assertFalse(True, msg="tests were improperly set up")
+            print("running {}".format(str(run_function)))
             res = run_function(self._case_params.input)
             self.assertEqual(res, self._case_params.result)
 
