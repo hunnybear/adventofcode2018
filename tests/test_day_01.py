@@ -59,7 +59,6 @@ def load_tests(loader, tests, pattern):
     class TestCase(unittest.TestCase):
 
         def __init__(self, case_params, part):
-            print('inited {}: {}'.format(part, case_params))
             self._case_params = case_params
             self._part = part
 
@@ -74,8 +73,7 @@ def load_tests(loader, tests, pattern):
                 run_function = aoc_2018.day_01.part_02
             else:
                 self.assertFalse(True, msg="tests were improperly set up")
-            print("running {}".format(str(run_function)))
-            res = run_function(self._case_params.input)
+            res = run_function(self._case_params.input_data)
             self.assertEqual(res, self._case_params.result)
 
 
