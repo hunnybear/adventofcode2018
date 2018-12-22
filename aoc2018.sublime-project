@@ -13,5 +13,9 @@
 		{
 			"path": "."
 		}
-	]
+	],
+	"settings": {
+		"test_command": "python -m unittest discover",
+		"test_virtualenv": "~/.virtualenvs/aoc/"
+	}
 }
