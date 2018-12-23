@@ -61,7 +61,7 @@ def run_day(day=None, parts=None):
         except AttributeError:
             print("No solution for {0}: {1}".format(day_string, part_function_name))
         else:
-            print("{0}: {1} {2:.>25}".format(day_string, part_function_name, res))
+            print("{0}: {1}{2:.>25}".format(day_string, part_function_name, ' ' + str(res)))
 
 
 
