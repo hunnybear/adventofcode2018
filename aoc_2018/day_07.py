@@ -21,12 +21,38 @@ def _get_proximal_dependencies(input_data):
     return dependencies
 
 
+def _get_dependencies_helper(step, proximal_dependencies, full_dependencies):
+    newly_computed_dependencies = {step: set(proximal_dependencies[step])}
+
+
+    for dependency in proximal_dependencies[step]:
+
+        if dependency in full_dependencies:
+            newly_computed_dependencies[step].update(full_dependencies[dependency])
+            continue
+        elif dependency in newly_computed_dependencies:
+            newly_computed_dependencies[step].update(newly_computed_dependencies[dependency])
+            continue
+        update_dependencies = _get_dependencies_helper(dependency, proximal_dependencies, full_dependencies)
+
+        for update_step in update_dependencies:
+            newly_computed_dependencies.setdefault(update_step, set()).update(update_dependencies[update_step])
+        newly_computed_dependencies[step].update(newly_computed_dependencies[dependency])
+
+    return newly_computed_dependencies
 
 
 def _get_full_dependencies(input_data):
-    prox_deps = _get_proximal_dependencies(input_data)
-    for step in prox_deps:
-    return prox_deps
+    proximal_dependencies = _get_proximal_dependencies(input_data)
+    full_dependencies = {}
+    for step, step_dependencies in proximal_dependencies.items():
+        if step in full_dependencies:
+            continue
+        dependency_update = _get_dependencies_helper(step, proximal_dependencies, full_dependencies)
+        assert not set(dependency_update) & set(full_dependencies)
+        full_dependencies.update(dependency_update)
+
+    return full_dependencies
 
 
 def part_01(input_data):
